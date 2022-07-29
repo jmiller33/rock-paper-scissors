@@ -54,30 +54,91 @@ function playRound(computerSelection,playerSelection) {
     }
 }
 
-function game(){
-    let score = 0;
+const rockButton = document.querySelector('#rock-button');
+const paperButton = document.querySelector('#paper-button');
+const scissorsButton = document.querySelector('#scissors-button');
 
-    for (let i=0; i < 5; i++){
-        let computer = getComputerChoice();
-        let player = getPlayerChoice();
-        let statement = playRound(computer,player);
-        let first = statement.slice(0,7);
+const scoreTracker = document.querySelector('#score-display')
+
+const winAnnouncement = document.querySelector('#win-announcement');
+
+const replayButton = document.querySelector('#replay-button')
+
+let score = 0;
+
+function game () {
+    let stat ="";
+    let track=0;
+
+    rockButton.addEventListener('click',() => {
+        if (track>=5) {
+            if (score>=3){
+                winAnnouncement.textContent = "You win! Great job!"
+            } else {
+                winAnnouncement.textContent = "You lose! Try again!"
+            }
+            return false;
+        }
+        const computerChoice = getComputerChoice();
+        stat = playRound (computerChoice,0);
+        winAnnouncement.textContent = String(stat)
+        track ++;
+        let first = stat.slice(0,7);
         if (first == "You win") {
             score = score + 1;
         }
-        console.log(statement);
-    }
+        scoreTracker.textContent = "Your score is: "+String(score);
+    });
 
-    console.log("Your score is: "+score)
+    paperButton.addEventListener('click',() => {
+        if (track>=5) {
+            if (score>=3){
+                winAnnouncement.textContent = "You win! Great job!"
+            } else {
+                winAnnouncement.textContent = "You lose! Try again!"
+            }
+            return false;
+        }
+        const computerChoice = getComputerChoice();
+        stat = playRound (computerChoice,1);
+        winAnnouncement.textContent = String(stat)
+        track++;
+        let first = stat.slice(0,7);
+        if (first == "You win") {
+            score = score + 1;
+        }
+        scoreTracker.textContent = "Your score is: "+String(score);
+    });
+
+    scissorsButton.addEventListener('click',() => {
+        if (track>=5) {
+            if (score>=3){
+                winAnnouncement.textContent = "You win! Great job!"
+            } else {
+                winAnnouncement.textContent = "You lose! Try again!"
+            }
+            return false;
+        }
+        const computerChoice = getComputerChoice();
+        stat = playRound (computerChoice,2);
+        winAnnouncement.textContent = String(stat)
+        track++;
+        let first = stat.slice(0,7);
+        if (first == "You win") {
+            score = score + 1;
+        }
+        scoreTracker.textContent = "Your score is: "+String(score);
+    });
+
+    replayButton.addEventListener('click',() => {
+        score=0;
+        track =0;
+        scoreTracker.textContent = "";
+        winAnnouncement.textContent = "";
+    });
+
 }
+    
 
-game()
-//Have the player input their choice of rock, paper, or scissors
-    //=> getPlayerChoice() function
-//Compare the player's choice and the computer's random choice
-    //If computer chooses paper and player chooses scissors
-    //If computer chooses rock and player chooses paper
-    //If computer chooses scissors and player chooses rock
-        //Win statement
-    //Else -> lose statement
-        //=> playRound() function
+
+game();
